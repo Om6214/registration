@@ -59,14 +59,15 @@ app.get("/login",(req,res)=>{
   res.render("login");
 })
 app.post("/login", async (req, res) => {
-  const { UserName, Userpassword } = req.body;
+  const UserName = req.body.name;
+  const Userpassword = req.body.password;
 
   try {
     const user = await Register.findOne({ name: UserName });
 
     if (user) {
       // If the user exists, check if the password matches
-      if (user.password === Userpassword) {
+      if (user.Password === Userpassword) {
         return res.status(200).render("enter.hbs");
       } else {
         return res.status(401).render("error.hbs", { message: "Incorrect password" });
