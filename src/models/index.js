@@ -59,16 +59,18 @@ app.get("/login",(req,res)=>{
   res.render("login");
 })
 app.post("/login", async (req, res) => {
-  const { UserName, Userpassword } = req.body;
+  const UserName = req.body.name;
+  const Userpassword = req.body.Password;
 
   try {
-    const user = await Register.findOne({ name: UserName });
+    const user = await Register.findOne({ Name: UserName });
 
     if (user) {
       // If the user exists, check if the password matches
-      if (user.password === Userpassword) {
+      if (user.Password === Userpassword) {
         return res.status(200).render("enter.hbs");
       } else {
+        console.log(user);
         return res.status(401).render("error.hbs", { message: "Incorrect password" });
       }
     } else {
@@ -79,10 +81,6 @@ app.post("/login", async (req, res) => {
     res.status(500).render("error.hbs", { message: "Internal Server Error" });
   }
 });
-
-
-
-
 
 const PORT = process.env.PORT || 5500;
 app.listen(PORT, () => {
