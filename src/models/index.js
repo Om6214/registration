@@ -74,6 +74,7 @@ app.post("/login", async (req, res) => {
         return res.status(401).render("error.hbs", { message: "Incorrect password" });
       }
     } else {
+      console.log(user)
       return res.status(404).render("error.hbs", { message: "User not found" });
     }
   } catch (error) {
